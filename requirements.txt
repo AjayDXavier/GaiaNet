@@ -1,0 +1,9 @@
+streamlit>=1.20.0
+google-generativeai>=0.4.0
+Pillow
+torch
+transformers
+librosa
+pandas
+matplotlib
+ftfy
