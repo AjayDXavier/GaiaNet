@@ -95,26 +95,26 @@ This project showcases how **multimodal AI** can transform conservation and ecol
 
 ```bash
 pip install -r requirements.txt
-'''
+```
 ### **2. Set Gemini API Key
-'''bash
+
 
 You can provide the key in one of two ways:
-'''
-### **Via environment variable**
 
+### **Via environment variable**
+```
 ```bash
 export GEMINI_API_KEY="YOUR_KEY"
+```
 ### Or enter it directly in the Streamlit sidebar
 The sidebar includes a secure **password field** where you can manually enter your Gemini API key.
-'''
+
 ---
 
 ## 3. Run the App
-
-```bash
+```
 streamlit run app.py
-'''
+```
 # 🚧 WORK IN PROGRESS — Upcoming Features
 
 GaiaNet is actively being expanded.  
