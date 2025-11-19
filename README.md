@@ -1,229 +1,203 @@
-🌍 GaiaNet — Biodiversity Intelligence Platform (Hackathon Edition)
+# 🌍 GaiaNet — Biodiversity Intelligence Platform (Hackathon Edition)
 
-AI-Powered Ecosystem Monitoring using Google Gemini 2.5 Pro
+**AI-Powered Ecosystem Monitoring using Google Gemini 2.5 Pro**
 
-🧠 Overview
+---
 
-GaiaNet is an intelligent biodiversity monitoring and conservation decision-support system built for the SEED Hackathon 2025.
-It uses Google Gemini 2.5 Pro, Streamlit, and smart ecological modeling to generate real-time insights about wildlife and ecosystems.
+## 🧠 Overview
 
-🔎 What GaiaNet Does
+GaiaNet is an intelligent biodiversity monitoring and conservation decision-support system built for the **SEED Hackathon 2025**.  
+It uses **Google Gemini 2.5 Pro**, **Streamlit**, and smart ecological modeling to generate real-time insights about wildlife and ecosystems.
 
-Detects wildlife species from images
+### 🔎 What GaiaNet Does
+- Detects wildlife species from images  
+- Forecasts population decline or recovery  
+- Models ecosystem stability and species interactions  
+- Generates conservation actions prioritized by impact & urgency  
+- Provides a clean, modern dashboard UI with dark mode  
 
-Forecasts population decline or recovery
+This project showcases how **multimodal AI** can transform conservation and ecological research when combined with structured workflows and intuitive visualization.
 
-Models ecosystem stability and species interactions
+---
 
-Generates conservation actions prioritized by impact & urgency
+## 🏗️ Tech Stack
 
-Provides a clean, modern dashboard UI with dark mode
+| Component | Technology |
+|----------|------------|
+| **Frontend / Dashboard** | Streamlit (Dark Mode Custom UI) |
+| **AI Engine** | Google Gemini 2.5 Pro |
+| **Fallback Model** | CLIP zero-shot (HuggingFace Transformers) |
+| **Data Handling** | pandas, matplotlib |
+| **PDF Export** | fpdf2 |
+| **Audio Processing** | librosa, soundfile |
+| **Map Visualization** | pydeck |
+| **Satellite/Drone Analysis** | numpy (mock NDVI) |
 
-This project showcases how multimodal AI can transform conservation and ecological research when combined with structured workflows and intuitive visualization.
+---
 
-🏗️ Tech Stack
-Component	Technology
-Frontend / Dashboard	Streamlit (Dark Mode Custom UI)
-AI Engine	Google Gemini 2.5 Pro
-Fallback Model	CLIP zero-shot from HuggingFace
-Data Handling	pandas, matplotlib
-PDF Export	fpdf2
-Audio Processing	librosa, soundfile
-Map Visualization	pydeck
-Satellite/Drone Analysis	numpy (mock NDVI)
-🚀 Key Features (Current Version)
-🦜 1. Species Detection
+## 🚀 Key Features (Current Version)
 
-Upload an image
+### 🦜 1. Species Detection
+- Upload an image  
+- Gemini identifies:
+  - common name  
+  - scientific name  
+  - habitat type  
+  - confidence score  
+  - observations  
+- Automatic fallback to CLIP if API is missing
 
-Gemini identifies:
+---
 
-common name
+### 📈 2. Population Forecasting
+- Upload or auto-generate population history  
+- Gemini uses ecological reasoning to produce:
+  - next 6 months population forecast  
+  - confidence intervals  
+  - decline/recovery assessment  
+  - textual explanations  
+- Clean visualization of forecasted trends  
 
-scientific name
+---
 
-habitat type
+### 🕸️ 3. Ecosystem Interaction Modeling
+- Gemini models species interactions and food webs  
+- Detects keystone species  
+- Estimates ecosystem collapse risk  
+- Runs “what-if” simulations  
 
-confidence score
+---
 
-observations
+### 🌱 4. Conservation Recommendations
+- Gemini suggests prioritized actions:
+  - habitat restoration  
+  - anti-poaching  
+  - invasive species control  
+  - corridor rebuilding  
+- Provides impact scores, urgency levels, and rationale  
 
-Automatic fallback to CLIP if API is missing
+---
 
-📈 2. Population Forecasting
+### 🧪 5. Clean Dark-Themed Dashboard
+- Fully redesigned UI  
+- Card layout  
+- Modern typography  
+- Compact charts  
+- Clean tab structure  
+- Consistent dark mode  
 
-Upload or auto-generate population history
+---
 
-Gemini uses ecological reasoning to produce:
+## ⚙️ Installation & Run
 
-next 6 months population forecast
-
-confidence intervals
-
-decline/recovery assessment
-
-textual explanations
-
-Clean visualization of forecasted trends
-
-🕸️ 3. Ecosystem Interaction Modeling
-
-Gemini models species interactions and food webs
-
-Detects keystone species
-
-Estimates ecosystem collapse risk
-
-Runs “what-if” simulations (e.g., species declines)
-
-🌱 4. Conservation Recommendations
-
-Gemini gives prioritized actions:
-
-habitat restoration
-
-anti-poaching
-
-invasive species control
-
-corridor rebuilding
-
-Includes urgency, impact, cost estimates, and rationale
-
-🧪 5. Clean Dark-Themed Dashboard
-
-Fully redesigned UI
-
-Card layout
-
-Modern typography
-
-Compact charts
-
-Clean tab structure
-
-Consistent dark mode
-
-⚙️ Installation & Run
-1. Install Requirements
+### **1. Install Requirements**
+```bash
 pip install -r requirements.txt
 
-2. Set Gemini API Key
+## 2. Set Gemini API Key
 
-Either via environment variable:
+You can provide the key in one of two ways:
 
+### **Via environment variable**
+```bash
 export GEMINI_API_KEY="YOUR_KEY"
+### Or enter it directly in the Streamlit sidebar
+The sidebar includes a secure **password field** where you can manually enter your Gemini API key.
 
+---
 
-Or enter it in the Streamlit sidebar.
+## 3. Run the App
 
-3. Run App
+```bash
 streamlit run app.py
-🚧 WORK IN PROGRESS — Upcoming Features
+# 🚧 WORK IN PROGRESS — Upcoming Features
 
-GaiaNet is actively being expanded. The following features are in development and partially implemented in prototype form:
+GaiaNet is actively being expanded.  
+The following features are **in development** and partially implemented in prototype form:
 
+---
 
-📊 1. Beautiful KPI Cards
+## 📊 1. Beautiful KPI Cards
+Upcoming visually appealing KPI-style metrics:
 
-Upcoming cards:
+- **Ecosystem health score**  
+- **Population risk score**  
+- **Habitat quality metric**  
+- **NDVI (vegetation index)**  
 
-Ecosystem health score
+These will appear after species detection, forecasting, or ecosystem modeling.
 
-Population risk score
+---
 
-Habitat quality metric
+## 📄 2. PDF Report Export
+A one-click **Download Report** button will generate a full conservation report containing:
 
-NDVI (vegetation index)
+- Detected species  
+- Forecast graphs  
+- Ecological reasoning  
+- Intervention recommendations  
+- Metadata  
+- Images / spectrograms  
 
-These will appear after each module finishes processing.
+Built using **fpdf2** for lightweight PDF creation.
 
-📄 2. PDF Report Export
+---
 
-A single-click Download Report button will generate:
+## 🖼️ 3. Multi-Image Batch Detection
+Allows users to:
 
-detected species
+- Upload **5–20 images at once**  
+- Run species detection on each image  
+- Display results in a **gallery-style layout**  
+- Optionally extract & display **GPS coordinates (EXIF)** on a map  
 
-graphs
+---
 
-ecological reasoning
+## 🎧 4. Audio Species Detection
+Support for analyzing wildlife audio such as:
 
-intervention recommendations
+- Bird calls  
+- Frog croaks  
+- Mammal sounds  
+- Insect signals  
 
-metadata
+### Pipeline:
+1. Convert audio → **spectrogram**  
+2. Send spectrogram → **Gemini** for species inference  
+3. *(Optional)* Use **YAMNet** for pre-filtering the sound category  
 
-images/spectrograms
+---
 
-Using fpdf2 for lightweight PDF creation.
+## 🛰️ 5. Satellite Image Analysis
+Two upcoming satellite/drone modules:
 
-🖼️ 3. Multi-Image Batch Detection
+- **NDVI vegetation health estimation** (mock or real NDVI)  
+- **Habitat quality scoring**  
+- **Deforestation / disturbance analysis**  
 
-Feature enables:
+Will support drone imagery and geospatial raster data.
 
-Uploading 5–20 images at once
+---
 
-Running detection on each
+## 🗺️ 6. Map Visualizations (pydeck)
+A map dashboard layer is in development to:
 
-Summaries displayed in a gallery-like layout
+- Plot species sightings on a map  
+- Cluster multiple detections  
+- Visualize ecosystem risk by region  
+- Use **GPS EXIF data** when available  
+- Fallback to synthetic coordinates for demo images  
 
-Optional GPS-based mapping via EXIF
+---
 
-🎧 4. Audio Species Detection
+## 🧭 7. Literature Extraction (Planned)
+Using Gemini to extract structured ecological insights from research papers:
 
-Supports:
+- Species references  
+- Threats  
+- Policy recommendations  
+- Geographic mentions  
 
-Bird calls
+This will help tie scientific literature to real-time species detection and forecasting.
 
-Frog croaks
-
-Mammal sounds
-
-Insect pulses
-
-Pipeline:
-
-Convert audio → spectrogram
-
-Send spectrogram to Gemini for species inference
-
-(Optional) add YAMNet classifier as a pre-filter
-
-🛰️ 5. Satellite Image Analysis
-
-Two planned modes:
-
-NDVI vegetation health inference (mock or real)
-
-Habitat quality scoring
-
-Deforestation / disturbance estimation
-
-Drone and satellite integration will allow ecosystem-wide assessments.
-
-🗺️ 6. Map Visualizations (pydeck)
-
-Upcoming map dashboard layer:
-
-Plot species sightings on a map
-
-Cluster multiple locations
-
-Visualize ecosystem risk by region
-
-Use EXIF GPS when available
-
-Fallback to synthetic coordinates during demo
-
-🧭 7. Literature Extraction (Planned)
-
-Using Gemini to extract:
-
-species references
-
-threats
-
-policy recommendations
-
-geospatial mentions
-
-from uploaded PDFs or journal abstracts.
+---
