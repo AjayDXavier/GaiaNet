@@ -1,0 +1,13 @@
+streamlit
+google-generativeai
+Pillow
+torch
+transformers
+librosa
+pandas
+matplotlib
+ftfy
+google-cloud-storage
+google-cloud-bigquery
+pandas
+requests
