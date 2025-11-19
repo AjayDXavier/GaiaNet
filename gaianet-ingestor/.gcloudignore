@@ -1,0 +1,44 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+env/
+venv/
+.venv/
+
+# VS Code config
+.vscode/
+*.code-workspace
+
+# macOS system files
+.DS_Store
+
+# Git metadata
+.git/
+.gitignore
+
+# Binary artifacts
+*.so
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Local environment variables
+.env
+*.env
+
+# Local data files (Cloud Run should not receive these)
+*.zip
+*.tar
+*.gz
+*.csv
+*.json
+
+# Secret or credential patterns
+secret*
+secrets/
+key.json
+credentials.json
