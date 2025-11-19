@@ -1,3 +1,15 @@
+from google.cloud import bigquery
+from google.oauth2 import service_account
+import toml
+
+# Use local credentials from gcloud auth login
+credentials = service_account.Credentials.from_service_account_info
+
+bq_client = bigquery.Client(
+    credentials=credentials,
+    project="gen-lang-client-0789978240"   # <— IMPORTANT
+)
+
 import os
 import io
 import json
@@ -391,6 +403,17 @@ with tabs[0]:
     <p style='font-size:17px;'>GaiaNet is built for the <b>SEED Hackathon</b> to showcase the future of AI-driven conservation.</p>
     </div>
     """, unsafe_allow_html=True)
+
+    st.subheader("🔎 WDPA Test Query (BigQuery Connection Check)")
+
+    query = """
+    SELECT *
+    FROM `gen-lang-client-0789978240.gaia_net_dwc_data.wdpa_temp_1`
+    LIMIT 5
+    """
+
+    df = bq_client.query(query).to_dataframe()
+    st.dataframe(df)
 
 
 

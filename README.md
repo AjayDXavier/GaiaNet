@@ -4,7 +4,7 @@
 
 ---
 
-## 🧠 Overview
+##  Overview
 
 GaiaNet is an intelligent biodiversity monitoring and conservation decision-support system built for the **SEED Hackathon 2025**.  
 It uses **Google Gemini 2.5 Pro**, **Streamlit**, and smart ecological modeling to generate real-time insights about wildlife and ecosystems.
@@ -35,6 +35,33 @@ This project showcases how **multimodal AI** can transform conservation and ecol
 
 ---
 
+        ┌──────────────────────┐
+        │  Streamlit Dashboard │
+        │  (app.py - Gemini)   │
+        └───────────┬──────────┘
+                    │
+                    ▼
+        ┌──────────────────────┐
+        │ Google BigQuery      │
+        │ gaia_net_dwc_data    │
+        │ ├ gbif_occurrences   │
+        │ ├ wdpa_temp_1        │
+        │ └ iucn_species       │
+        └───────────┬──────────┘
+                    │
+        ┌─────────────────────────────┐
+        │ Google Cloud Run Ingestor   │
+        │ (gaianet-ingestor service)  │
+        │ /ingest/gbif   /wdpa /iucn  │
+        └───────────┬────────┬────────┘
+                    │         │
+        ┌───────────┘         └──────────────┐
+        │                                     │
+        ▼                                     ▼
+GBIF API                               WDPA + IUCN APIs
+(occurrence DWCA)                       (status, PA data)
+
+
 ## 🚀 Key Features (Current Version)
 
 ### 🦜 1. Species Detection
@@ -61,10 +88,12 @@ This project showcases how **multimodal AI** can transform conservation and ecol
 ---
 
 ### 🕸️ 3. Ecosystem Interaction Modeling
-- Gemini models species interactions and food webs  
-- Detects keystone species  
-- Estimates ecosystem collapse risk  
-- Runs “what-if” simulations  
+With reasoning:
+- Keystone species
+- Predation & competition
+- Network stability score
+- Collapse risk
+- Simulation: “what if species declines by 30%”
 
 ---
 
@@ -87,6 +116,23 @@ This project showcases how **multimodal AI** can transform conservation and ecol
 - Consistent dark mode  
 
 ---
+
+## Cloud Run Ingestor
+You have deployed:
+gaianet-ingestor
+Endpoints:
+# Endpoint	          Description
+
+   /	                Health check
+/ingest/gbif	    Starts GBIF DWCA download
+/ingest/wdpa	   (Planned) Load WDPA CSV/Geo data
+/ingest/iucn	   (Planned) Load conservation status
+
+# Credentials are stored as Cloud Run environment variables:
+GBIF_USERNAME
+GBIF_PASSWORD
+GBIF_EMAIL
+
 
 ## ⚙️ Installation & Run
 
@@ -207,6 +253,7 @@ This will help tie scientific literature to real-time species detection and fore
 
 ### Data Acknowledgment
 
+## IUCN Red List
 This project uses species conservation status data from:
 
 **IUCN 2025. The IUCN Red List of Threatened Species. Version 2025-2.  
