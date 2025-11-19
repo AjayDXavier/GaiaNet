@@ -62,6 +62,9 @@ GBIF API                               WDPA + IUCN APIs
 (occurrence DWCA)                       (status, PA data)
 
 
+--
+
+
 ## 🚀 Key Features (Current Version)
 
 ### 🦜 1. Species Detection
