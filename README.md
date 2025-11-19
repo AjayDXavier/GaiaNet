@@ -205,4 +205,13 @@ Using Gemini to extract structured ecological insights from research papers:
 
 This will help tie scientific literature to real-time species detection and forecasting.
 
+### Data Acknowledgment
+
+This project uses species conservation status data from:
+
+**IUCN 2025. The IUCN Red List of Threatened Species. Version 2025-2.  
+Available at: https://www.iucnredlist.org**
+
+All rights reserved by IUCN.
+
 ---

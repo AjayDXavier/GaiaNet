@@ -1,9 +1,0 @@
-streamlit
-google-generativeai
-Pillow
-torch
-transformers
-librosa
-pandas
-matplotlib
-ftfy
