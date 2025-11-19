@@ -214,4 +214,7 @@ Available at: https://www.iucnredlist.org**
 
 All rights reserved by IUCN.
 
+**UNEP-WCMC and IUCN (2025), Protected Planet: The World Database on Protected Areas (WDPA) [Online], November 2025, Cambridge, UK: UNEP-WCMC and IUCN. 
+Available at: www.protectedplanet.net.
+
 ---

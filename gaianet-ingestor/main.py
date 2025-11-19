@@ -110,3 +110,14 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
     print(f"🚀 Starting Flask server on port {port}")
     app.run(host="0.0.0.0", port=port)
+
+curl -X POST https://gaianet-ingestor-108975128557.asia-south1.run.app/
+
+@app.route("/ingest/wdpa")
+def ingest_wdpa_route():
+    return ingest_wdpa_data()
+
+@app.route("/ingest/iucn")
+def ingest_iucn_route():
+    return ingest_iucn_data()
+
