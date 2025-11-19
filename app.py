@@ -9,6 +9,100 @@ from PIL import Image
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# ================= CUSTOM CSS FOR UI ENHANCEMENT ====================
+# ===================== DARK MODE (GLOBAL) ======================
+st.markdown("""
+<style>
+/* Main layout background */
+body, .main, .block-container { 
+    background-color: #1b1b1b !important; 
+    color: #e0e0e0 !important;
+}
+
+/* Card styling */
+.card {
+    background-color: #262626 !important;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.45);
+    margin-bottom: 20px;
+}
+
+/* Section headers */
+.section-header {
+    font-size: 28px; 
+    font-weight: 700;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #444;
+    margin-bottom: 15px;
+    color: #f3f3f3;
+}
+
+/* Buttons */
+.stButton>button {
+    background-color: #3a6df0 !important;
+    color: #ffffff !important;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 600;
+    border: none;
+}
+
+.stButton>button:hover {
+    background-color: #2c56cc !important;
+}
+
+/* File uploader */
+.css-1n76uvr, .stFileUploader {
+    background-color: #2a2a2a !important;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+/* Text inputs */
+.stTextInput>div>div>input {
+    background-color: #2a2a2a !important;
+    color: #f0f0f0 !important;
+}
+
+/* DataFrames */
+.dataframe, .stDataFrame {
+    color: #ffffff !important;
+}
+
+/* JSON box */
+.stJson {
+    background-color: #262626 !important;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* Tabs */
+.stTabs [role="tab"] {
+    background-color: #2a2a2a !important;
+    color: #cccccc !important;
+    padding: 8px 14px;
+    border-radius: 6px;
+}
+
+.stTabs [role="tab"][aria-selected="true"] {
+    background-color: #3a3a3a !important;
+    color: #ffffff !important;
+}
+
+/* Chart background */
+.stPlotlyChart, .stAltairChart, .stPyplotChart {
+    background-color: #1b1b1b !important;
+}
+
+/* Titles */
+h1, h2, h3, h4, h5, h6 {
+    color: #f5f5f5 !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
 # CLIP fallback
 from transformers import pipeline
 
@@ -29,6 +123,8 @@ st.title("🌍 GaiaNet — Biodiversity AI Platform (Gemini Hybrid Mode)")
 st.write("Upload an image → get species detection → forecast population → ecosystem modeling → recommendations.")
 
 
+
+
 # =========================================================
 # SIDEBAR — API KEY
 # =========================================================
@@ -41,7 +137,7 @@ if api_key:
 
 if HAS_GEMINI and "GEMINI_API_KEY" in os.environ:
     genai.configure(api_key=os.environ["GEMINI_API_KEY"])
-    GEMINI_MODEL = "gemini-1.5-pro"
+    GEMINI_MODEL = "gemini-2.5-pro"
     st.sidebar.success("Gemini Ready ✔")
 else:
     st.sidebar.warning("Gemini key missing → CLIP fallback only.")
@@ -257,143 +353,216 @@ Return ONLY JSON:
 # =========================================================
 # TABS
 # =========================================================
-tabs = st.tabs(["Species Detection", "Forecast", "Ecosystem", "Recommendations", "Raw JSON"])
+tabs = st.tabs(["Home", "Species Detection", "Forecast", "Ecosystem", "Recommendations", "Raw JSON"])
+
+
+# =========================================================
+# 0) HOME PAGE TAB
+# =========================================================
+with tabs[0]:
+    st.markdown("<div class='section-header'>🌍 Welcome to GaiaNet</div>", unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class='card'>
+    <h3>What is GaiaNet?</h3>
+    <p style='font-size:17px;'>
+    GaiaNet is an AI-powered biodiversity monitoring platform built using Google Gemini 2.5 Pro.
+    It helps conservationists, researchers, and policymakers understand ecosystem conditions
+    through intelligent analysis of wildlife images and ecological data.
+    </p>
+
+    <h3>✨ Key Features</h3>
+    <ul style='font-size:17px;'>
+        <li><b>Species Detection:</b> Upload a wildlife image to detect species and habitat type.</li>
+        <li><b>Population Forecasting:</b> Predict future population health using Gemini reasoning.</li>
+        <li><b>Ecosystem Modeling:</b> Build interaction networks and assess collapse risk.</li>
+        <li><b>Conservation Recommendations:</b> Get ranked interventions for maximum impact.</li>
+        <li><b>AI Reasoning:</b> All insights are explained with ecological logic and structured JSON.</li>
+    </ul>
+
+    <h3>📌 How to Use</h3>
+    <ol style='font-size:17px;'>
+        <li>Go to <b>Species Detection</b> and upload a wildlife image.</li>
+        <li>Review detected species and auto-generated ecosystem info.</li>
+        <li>Check <b>Forecast</b> for trends and <b>Ecosystem</b> for stability assessment.</li>
+        <li>See <b>Recommendations</b> for actionable ideas.</li>
+    </ol>
+
+    <p style='font-size:17px;'>GaiaNet is built for the <b>SEED Hackathon</b> to showcase the future of AI-driven conservation.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
 
 
 
 # =========================================================
 # 1) SPECIES DETECTION TAB
 # =========================================================
-with tabs[0]:
-    st.header("1. Species Detection")
+with tabs[1]:
+    st.markdown("<div class='section-header'>🦜 Species Detection</div>", unsafe_allow_html=True)
 
-    uploaded = st.file_uploader("Upload Image", type=["jpg", "png"])
-    history_csv = st.file_uploader("Optional Population History CSV", type=["csv"])
-    auto_run = st.checkbox("Auto-run all steps", value=True)
+    colA, colB = st.columns([1, 2])
 
-    if uploaded:
-        img = Image.open(uploaded).convert("RGB")
-        st.image(img, width=400)
+    with colA:
+        uploaded = st.file_uploader("📤 Upload wildlife image", type=["jpg", "png"])
+        history_csv = st.file_uploader("📊 Optional: Population History CSV", type=["csv"])
+        auto_run = st.checkbox("⚡ Auto-run advanced analysis", value=True)
 
-        img_bytes = image_to_bytes(img)
+    with colB:
+        if uploaded:
+            img = Image.open(uploaded).convert("RGB")
+            st.image(img, width=450, caption="Uploaded Image")
 
-        st.subheader("Running Species Detection…")
+            st.markdown("<div class='card'>", unsafe_allow_html=True)
+            st.subheader("🔍 Running Species Detection…")
 
-        if HAS_GEMINI and "GEMINI_API_KEY" in os.environ:
-            with st.spinner("Gemini analyzing image..."):
-                analysis = gemini_species_analysis(img_bytes)
+            img_bytes = image_to_bytes(img)
+
+            if HAS_GEMINI and "GEMINI_API_KEY" in os.environ:
+                with st.spinner("Analyzing image with Gemini..."):
+                    analysis = gemini_species_analysis(img_bytes)
+            else:
+                st.info("Using CLIP fallback (Gemini not available).")
+                labels = ["bear", "lion", "tiger", "wolf", "elephant", "deer"]
+                preds = clip_pipe(img, labels)
+                top = preds[0]["label"]
+
+                analysis = {
+                    "parsed": {
+                        "species_detected": [{"common_name": top, "scientific_name": "", "confidence": "medium"}],
+                        "count": 1,
+                        "habitat_type": "unknown",
+                        "observations": "CLIP fallback",
+                        "recommendation_summary": "Observe habitat quality."
+                    },
+                    "raw": preds
+                }
+
+            st.session_state["analysis"] = analysis
+
+            parsed = analysis["parsed"]
+            if parsed:
+                st.success(f"**Species Detected:** {parsed['species_detected'][0]['common_name']}")
+                st.write(f"**Scientific Name:** {parsed['species_detected'][0]['scientific_name']}")
+                st.write(f"**Confidence:** {parsed['species_detected'][0]['confidence']}")
+                st.write(f"**Habitat:** {parsed['habitat_type']}")
+                st.write(f"**Notes:** {parsed['observations']}")
+            else:
+                st.warning("Could not parse model output.")
+            st.markdown("</div>", unsafe_allow_html=True)
+
+            # History Handling
+            if history_csv:
+                df = pd.read_csv(history_csv, parse_dates=["date"])
+            else:
+                today = datetime.utcnow().date()
+                hist = []
+                base = 120
+                for i in range(6):
+                    d = today.replace(day=1) - pd.DateOffset(months=i)
+                    hist.append({"date": d.strftime("%Y-%m-%d"), "count": base - i * 12})
+                df = pd.DataFrame(hist[::-1])
+
+            st.session_state["history"] = df
+
+            st.markdown("<div class='card'>", unsafe_allow_html=True)
+            if auto_run:
+                species = parsed["species_detected"][0]["common_name"]
+                history_list = [
+                    {"date": r["date"].strftime("%Y-%m-%d"), "count": int(r["count"])}
+                    for _, r in df.iterrows()
+                ]
+
+                with st.spinner("📈 Forecasting population..."):
+                    st.session_state["forecast"] = gemini_population_forecast(species, history_list)
+
+                with st.spinner("🕸 Modeling ecosystem..."):
+                    species_list = [s["common_name"] for s in parsed["species_detected"]]
+                    st.session_state["ecosystem"] = gemini_ecosystem_model(species_list)
+
+                with st.spinner("🛠 Generating conservation recommendations..."):
+                    status = parsed["recommendation_summary"]
+                    st.session_state["recs"] = gemini_recommendations(
+                        species, status, st.session_state["ecosystem"]["parsed"]
+                    )
+                st.success("All advanced analyses completed.")
+            st.markdown("</div>", unsafe_allow_html=True)
         else:
-            st.info("Using CLIP fallback.")
-            labels = ["bear", "lion", "tiger", "wolf", "elephant", "deer"]
-            preds = clip_pipe(img, labels)
-            top = preds[0]["label"]
-
-            analysis = {
-                "parsed": {
-                    "species_detected": [{"common_name": top, "scientific_name": "", "confidence": "medium"}],
-                    "count": 1,
-                    "habitat_type": "unknown",
-                    "observations": "CLIP fallback",
-                    "recommendation_summary": "Observe habitat quality."
-                },
-                "raw": preds
-            }
-
-        st.session_state["analysis"] = analysis
-
-        if analysis["parsed"]:
-            st.success(analysis["parsed"])
-        else:
-            st.warning("Could not parse JSON")
-
-
-        # Load or generate history
-        if history_csv:
-            df = pd.read_csv(history_csv, parse_dates=["date"])
-        else:
-            # Synthetic history
-            today = datetime.utcnow().date()
-            hist = []
-            base = 120
-            for i in range(6):
-                d = today.replace(day=1) - pd.DateOffset(months=i)
-                hist.append({"date": d.strftime("%Y-%m-%d"), "count": base - i * 12})
-            df = pd.DataFrame(hist[::-1])
-
-        st.session_state["history"] = df
-
-
-        # Auto-run deeper modules
-        if auto_run:
-            species = analysis["parsed"]["species_detected"][0]["common_name"]
-            history_list = [
-                {"date": r["date"].strftime("%Y-%m-%d"), "count": int(r["count"])}
-                for _, r in df.iterrows()
-            ]
-
-            with st.spinner("Running population forecast…"):
-                st.session_state["forecast"] = gemini_population_forecast(species, history_list)
-
-            with st.spinner("Running ecosystem model…"):
-                species_list = [s["common_name"] for s in analysis["parsed"]["species_detected"]]
-                st.session_state["ecosystem"] = gemini_ecosystem_model(species_list)
-
-            with st.spinner("Generating conservation recommendations…"):
-                status = analysis["parsed"]["recommendation_summary"]
-                st.session_state["recs"] = gemini_recommendations(
-                    species, status, st.session_state["ecosystem"]["parsed"]
-                )
+            st.info("Upload an image to begin analysis.")
 
 
 
 # =========================================================
 # 2) FORECAST TAB
 # =========================================================
-with tabs[1]:
-    st.header("2. Population Forecast")
+with tabs[2]:
+    st.markdown("<div class='section-header'>📈 Population Forecast</div>", unsafe_allow_html=True)
+
     if "forecast" in st.session_state:
         parsed = st.session_state["forecast"]["parsed"]
+
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
+        st.subheader("🔮 Forecast Summary")
         st.json(parsed)
+        st.markdown("</div>", unsafe_allow_html=True)
 
         if parsed and "forecast" in parsed:
-            dff = pd.DataFrame(parsed["forecast"])
-            fig, ax = plt.subplots()
-            ax.plot(pd.to_datetime(dff["month"]), dff["population"], marker="o")
-            ax.set_title("Predicted Population Trend")
+            df = pd.DataFrame(parsed["forecast"])
+
+            st.markdown("<div class='card'>", unsafe_allow_html=True)
+            st.subheader("📉 Population Trend Visualization")
+
+            fig, ax = plt.subplots(figsize=(6, 3))  # Smaller width and height
+            ax.plot(pd.to_datetime(df["month"]), df["population"],marker="o", linewidth=2,markersize=6)
+            ax.set_title("Population Forecast",fontsize=14)
+            ax.set_ylabel("Population",fontsize=12)
+            ax.grid(alpha=0.3)
+            plt.tight_layout()
             st.pyplot(fig)
+            st.markdown("</div>", unsafe_allow_html=True)
+            st.markdown("</div>", unsafe_allow_html=True)
     else:
-        st.info("Run detection first.")
+        st.info("Run detection to generate forecast data.")
 
 
 
 # =========================================================
 # 3) ECOSYSTEM TAB
 # =========================================================
-with tabs[2]:
-    st.header("3. Ecosystem Modeling")
+with tabs[3]:
+    st.markdown("<div class='section-header'>🕸 Ecosystem Modeling</div>", unsafe_allow_html=True)
+
     if "ecosystem" in st.session_state:
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
+        st.subheader("🌿 Ecosystem Stability Model")
         st.json(st.session_state["ecosystem"]["parsed"])
+        st.markdown("</div>", unsafe_allow_html=True)
     else:
-        st.info("No ecosystem model yet.")
+        st.info("No ecosystem model available yet.")
 
 
 
 # =========================================================
 # 4) RECOMMENDATIONS TAB
 # =========================================================
-with tabs[3]:
-    st.header("4. Conservation Recommendations")
+with tabs[4]:
+    st.markdown("<div class='section-header'>🛠 Conservation Recommendations</div>", unsafe_allow_html=True)
+
     if "recs" in st.session_state:
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
+        st.subheader("🌱 Recommended Actions")
         st.json(st.session_state["recs"]["parsed"])
+        st.markdown("</div>", unsafe_allow_html=True)
     else:
-        st.info("No recommendations available.")
+        st.info("No recommendations generated yet.")
+
 
 
 
 # =========================================================
 # 5) RAW JSON TAB
 # =========================================================
-with tabs[4]:
+with tabs[5]:
     st.header("Debug: Raw Model Output")
     st.subheader("Species Detection Raw Output:")
     st.json(st.session_state.get("analysis"))
