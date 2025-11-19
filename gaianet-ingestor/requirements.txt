@@ -11,3 +11,5 @@ google-cloud-storage
 google-cloud-bigquery
 pandas
 requests
+Flask==2.3.2
+
