@@ -1,14 +1,8 @@
 from google.cloud import bigquery
-from google.oauth2 import service_account
-import toml
 
-# Use local credentials from gcloud auth login
-credentials = service_account.Credentials.from_service_account_info
-
-bq_client = bigquery.Client(
-    credentials=credentials,
-    project="gen-lang-client-0789978240"   # <— IMPORTANT
-)
+# BigQuery will automatically use GOOGLE_APPLICATION_CREDENTIALS
+bq_client = bigquery.Client()
+ 
 
 import os
 import io
